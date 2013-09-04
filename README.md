@@ -3,14 +3,14 @@
 PyFuncT stands for Python Functional Testing and it is a small framework that aims to help writing functional automated tests with python, to test web applications.
 
 Principles:
-* <b>Organization</b>: Provides a clean workflow to store elements selectors, pages and config, helping you to keep your tests organized and reusable.
+* <b>Organization</b>: Provides a clean workflow to store element selectors, pages and config, helping you to keep your tests organized and reusable.
 
-* <b>Flexibility</b>: PyFunct tests are fully built with python, giving you total flexibility. With frameworks that provide natural-language like programming, sometimes it can get really tricky to perform simple actions (like opening two browsers in the same test if you need to test live updates, for instance)
+* <b>Flexibility</b>: PyFunct tests are fully built with python, giving you total flexibility. With frameworks that provide natural language-like programming, sometimes it can get really tricky to perform simple actions (like opening two browsers in the same test if you need to test live updates, for instance)
 
-* <b>Freedom</b>:  Most of the framework is customizable and optional, it means you can choose not to use some part of it or make a few tweaks, if necessary.
+* <b>Freedom</b>:  Most of the framework is customizable and optional, so that you can choose not to use some parts of it or make a few tweaks, if necessary.
 
 PyFunct includes:
-* Pages (which holds elements selectors and URLS)
+* Pages (which holds element selectors and URLs)
 * Actions
 * Config (global configuration easily manageable)
 * [Splinter](http://splinter.cobrateam.info/) driver compatibility, which includes selenium, phantomJS, zopetest and more
@@ -18,7 +18,7 @@ PyFunct includes:
 ## Getting started
 
 This should get you started with the basic functionality. You can look for more examples
-on `examples` folder.
+in the `examples` folder.
 
 
 ### Step 1 - The test case
@@ -30,7 +30,7 @@ from pyfunct import FunctTestCase
 class MyTestCase(FunctTestCase):
 
     def test_searching_a_wiki(self):
-        # This goes to the page and loads it's elements selectors.
+        # This goes to the page and loads its elements.
         self.browser.open_page('wikipedia index')
 
         # Fill the search input with "Functional testing"
@@ -51,14 +51,14 @@ class MyTestCase(FunctTestCase):
         self.actions.assert_title_contains(self.browser, expected_title)
 
 ```
-In the above code, we wrote a testcase that inherits from `FunctTestCase`. All PyFunct tests should inherit from it.
-`FunctTestCase` is just a testcase that inherits from `unittest.TestCase` (python's native unittest testcase) with some shortcuts. It means you can use it's methods (such as `assertIn`).
+In the code above, we wrote a testcase that inherits from `FunctTestCase`. All PyFunct tests should inherit from it.
+`FunctTestCase` is just a testcase that inherits from `unittest.TestCase` (python's native unittest testcase). Therefore, you can use its methods (such as `assertIn`).
 
-Before each test execution, a browser instance is initialized. When the test is finished. it's automatically exited.
+Before each test execution, a browser instance is initialized. When the test is finished, it automatically exits.
 If you want to create multiple browsers, all you need to do is call `self.create_browser()`.
 
 ### Step 2 - Creating pages
-In Step 1 we've made references to `wikipedia index`, `search input` and `search button`. These are aliases that were defined in a Page class. To create it, you can do the following:
+In Step 1 we've made references to `wikipedia index`, `search input` and `search button`. Those aliases were defined in the following Page class:
 ```python
 from pyfunct import Page
 
@@ -77,10 +77,10 @@ class IndexPage(Page):
         )
 
 ```
-All classes that inherits from Page and provides a `page_name` will be accessible by the browser.
+All classes that inherit from Page and provide a `page_name` will be accessible by the self.browser instance.
 
 ### Step 3 - Creating Actions
-In the second test (`test_searching_a_wiki_using_actions`), we've used two actions: `perform_search` and `assert_title_contains`. And with that, we've made the same thing as the first test, but in a simpler and reusable way. To write these actions and have them accessible by `actions`, from a `FunctTestCase`, you need to use the `@action` decorator, as follow:
+In the second test (`test_searching_a_wiki_using_actions`), we used two actions: `perform_search` and `assert_title_contains`. By doing that, we accomplished the same thing we did in the fist test, but in a simpler and more reusable way. In order to write such actions and have them accessible through the `actions` attribute from a `FunctTestCase`, all you need to do is use the `@action` decorator, as follows:
 
 ```python
 
@@ -104,7 +104,7 @@ def assert_title_contains(browser, expected_title):
 ```
 
 ### Step 4 - Manage your config
-Until now, we did not define nor the browser driver or the base url we should use. Pyfunct comes with a simple class-based configuration, which sets the global configuration attributes of your choice. Check it:
+Until now, we haven't defined the browser driver or the base url. Pyfunct comes with a simple class-based configuration, which sets the global configuration attributes of your choice. Check it out:
 ```python
 from pyfunct import BaseConfig
 
@@ -112,8 +112,8 @@ class WikipediaConfig(BaseConfig):
     base_url = 'http://en.wikipedia.org'
 ```
 
-That's it, we've just set the global config to have the `base_url` as wikipedia, since we are testing the wikipedia page.
-There's no need to change the `default_driver_name`, cause it's using splinter by default. Only if you want to use another browser. For that, you can check the documentation.
+That's it, we've just set the global `base_url` config to wikipedia, since we are testing the wikipedia page.
+There's no need to change the `default_driver_name`, since it's using splinter by default, unless you want to use another browser. In that case, check out the documentation.
 
 ### Step 5 - Run your tests
 Currently, PyFunct does not provide a test runner and you can run it as you wish. A good choice for it is [nose](https://github.com/nose-devs/nose).
